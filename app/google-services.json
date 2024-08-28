@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "969273617220",
+    "project_id": "usandosqlitepos2024",
+    "storage_bucket": "usandosqlitepos2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969273617220:android:621fb7253203fccf75c511",
+        "android_client_info": {
+          "package_name": "unipar.edu.utfpr.usandosqlitepos2024"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqO5h5_BafJ1tns6i_TFc2LKLzy5eplUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
