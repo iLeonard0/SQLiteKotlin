@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import unipar.edu.utfpr.usandosqlitepos2024.database.DatabaseHandler
 import unipar.edu.utfpr.usandosqlitepos2024.databinding.ActivityMainBinding
 
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() { //fim da MainActivity
 
         setButtonListener()
 
-        binding.etCod.setEnabled(false)
+        // binding.etCod.setEnabled(false)
 
         if (intent.getIntExtra("cod", 0) != 0) {
             binding.etCod.setText(intent.getIntExtra("cod", 0).toString())
@@ -101,17 +103,23 @@ class MainActivity : AppCompatActivity() { //fim da MainActivity
             "Pesquisar",
             DialogInterface.OnClickListener { dialogInterface, i ->
 
-                val registro = banco.find(etCodPesquisar.text.toString().toInt())
+                val banco = Firebase.firestore
 
-                if (registro != null) {
-                    binding.etCod.setText(etCodPesquisar.text.toString())
-                    binding.etNome.setText(registro.nome)
-                    binding.etTelefone.setText(registro.telefone)
-                } else {
-                    Toast.makeText(this, "Registro não encontrado", Toast.LENGTH_LONG).show()
-                }
+                banco.collection("cadastro")
+                    .whereEqualTo("_id", etCodPesquisar.text.toString().toInt())
+                    .get()
+                    .addOnSuccessListener { result ->
+                        val registro = result.documents.get(0)
+
+                        binding.etCod.setText(etCodPesquisar.text.toString())
+                        binding.etNome.setText(registro.data?.get("nome").toString())
+                        binding.etTelefone.setText(registro.data?.get("telefone").toString())
 
 
+                    }
+                    .addOnFailureListener { e ->
+                        println("Erro${e.message}")
+                    }
             }
         )
 
